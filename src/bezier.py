@@ -10,12 +10,12 @@ def line(
         but this is not actually required and extrapolation is possible.
     x:  The end points of the line segment are in x[0] and x[1].
 
-    Returns:    (1.0 - t) * x[0] + t * x[1]
+    Returns:    (1.0 - t) * x[0].reshape((-1,1)) + t * x[1].reshape((-1,1))
     """
     if x.shape[0] != 2:
         raise ValueError(
             f"Interpolation function requires exactly two end points in x[0] and x[1]: {x.shape=}"
         )
 
-    x = (1.0 - t) * x[0] + t * x[1]
-    return x
+    xx = (1.0 - t) * x[0].reshape((-1, 1)) + t * x[1].reshape((-1, 1))
+    return xx
