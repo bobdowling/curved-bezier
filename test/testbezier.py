@@ -39,5 +39,29 @@ class TestLinear(unittest.TestCase):
         self.assertAlmostEqual(x[1, N // 2], 0.5)
 
 
+class TestCross(unittest.TestCase):
+    def testShape(self) -> None:
+        x = numpy.array([1.0, 0.0, 0.0])
+        y = numpy.array([0.0, 1.0, 0.0])
+        z = numpy.array([0.0, 0.0, 1.0])
+        zz = bezier.cross(x, y)
+        self.assertEqual(zz.shape, (3,))
+
+    def testXYZ(self) -> None:
+        x = numpy.array([1.0, 0.0, 0.0])
+        y = numpy.array([0.0, 1.0, 0.0])
+        z = numpy.array([0.0, 0.0, 1.0])
+        zz = bezier.cross(x, y)
+        self.assertAlmostEqual(zz[0], z[0])
+        self.assertAlmostEqual(zz[1], z[1])
+        self.assertAlmostEqual(zz[2], z[2])
+
+    def testParallel(self):
+        x = numpy.array([1.0, 0.0, 0.0])
+        z = bezier.cross(x, x)
+        self.assertAlmostEqual(z[0], 0.0)
+        self.assertAlmostEqual(z[1], 0.0)
+        self.assertAlmostEqual(z[2], 0.0)
+
 if __name__ == "__main__":
     unittest.main()

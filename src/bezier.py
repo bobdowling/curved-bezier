@@ -23,6 +23,25 @@ def line(
     return xx
 
 
+def cross(
+    x: numpy.ndarray,
+    y: numpy.ndarray,
+) -> numpy.ndarray:
+    """3D cross product: Takes two 3D vectors and returns their cross-product."""
+    if x.shape[0] != 3 or y.shape[0] != 3:
+        raise ValueError(
+            f"Cross product requires 3D vectors: Axis 0 of both inputs must have length 3; {x.shape=}: {y.shape=}"
+        )
+    z = numpy.stack(
+        [
+            x[1] * y[2] - x[2] * y[1],
+            x[2] * y[0] - x[0] * y[2],
+            x[0] * y[1] - x[1] * y[0],
+        ]
+    )
+    return z
+
+
 def bezier(
     t: numpy.ndarray,
     x: numpy.ndarray,
