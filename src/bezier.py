@@ -43,6 +43,43 @@ def cross(
     return z
 
 
+def process(
+    x: npt.NDArray[np.float64],
+    y: npt.NDArray[np.float64],
+) -> tuple[
+    npt.NDArray[np.float64],  # xx
+    npt.NDArray[np.float64],  # yy
+    npt.NDArray[np.float64],  # mm
+    npt.NDArray[np.float64],  # nn
+    npt.NDArray[np.float64],  # a
+    npt.NDArray[np.float64],  # b
+    npt.NDArray[np.float64],  # c
+    npt.NDArray[np.float64],  # theta
+]:
+    """Takes two 3D vectors, x and y, and returns
+    ̂x: Normalized x
+    ̂y: Normalized y
+    ̂m: Normalized x×y (raises ValueError if this is zero)
+    ̂n: Normalized x×(x×y)
+    a: Coordinate of x in the (̂x, ̂n) coordinate system (x = (a,0))
+    b, c: Coordinates of y in the (̂x, ̂n) coordinate system (y = (b,c))
+    θ: The angle between  x and y (in radians)
+    """
+    EPSILON = 1.0e-7
+    xx = x / np.sqrt(np.dot(x, x))
+    yy = y / np.sqrt(np.dot(y, y))
+    m = cross(xx, yy)
+    if np.dot(m, m) < EPSILON:
+        raise ValueError(f"Vectors too close to [anti-]parallel: {x=}: {y=}")
+    mm = m / np.sqrt(np.dot(m, m))
+    nn = cross(xx, mm)
+    a = np.dot(x, xx)
+    b = np.dot(y, xx)
+    c = np.dot(y, nn)
+    theta = np.acos(np.dot(xx, yy))
+    return xx, yy, mm, nn, a, b, c, theta
+
+
 def bezier(
     t: npt.NDArray[np.float64],
     x: npt.NDArray[np.float64],
