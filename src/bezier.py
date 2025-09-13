@@ -1,12 +1,12 @@
 from typing import Callable
 
-import numpy
+import numpy as np
 
 
 def line(
-    t: numpy.ndarray,
-    x: numpy.ndarray,
-) -> numpy.ndarray:
+    t: np.ndarray,
+    x: np.ndarray,
+) -> np.ndarray:
     """Linear interpolation between two points, x[0] at t==0 and x[1] at t==1.
     t:  The interpolation parameter. Expected to hold values between 0.0 and 1.0,
         but this is not actually required and extrapolation is possible.
@@ -24,15 +24,15 @@ def line(
 
 
 def cross(
-    x: numpy.ndarray,
-    y: numpy.ndarray,
-) -> numpy.ndarray:
+    x: np.ndarray,
+    y: np.ndarray,
+) -> np.ndarray:
     """3D cross product: Takes two 3D vectors and returns their cross-product."""
     if x.shape[0] != 3 or y.shape[0] != 3:
         raise ValueError(
             f"Cross product requires 3D vectors: Axis 0 of both inputs must have length 3; {x.shape=}: {y.shape=}"
         )
-    z = numpy.stack(
+    z = np.stack(
         [
             x[1] * y[2] - x[2] * y[1],
             x[2] * y[0] - x[0] * y[2],
@@ -43,10 +43,10 @@ def cross(
 
 
 def bezier(
-    t: numpy.ndarray,
-    x: numpy.ndarray,
-    f: Callable[[numpy.ndarray, numpy.ndarray], numpy.ndarray],
-) -> numpy.ndarray:
+    t: np.ndarray,
+    x: np.ndarray,
+    f: Callable[[np.ndarray, np.ndarray], np.ndarray],
+) -> np.ndarray:
     """Recursive definition of bezier curves.
     t:  The interpolation parameter. Expected to hold values between 0.0 and 1.0,
         but this is not actually required and extrapolation is possible.
@@ -61,5 +61,5 @@ def bezier(
         # There is scope for significant memo-optimization here!
         x0 = bezier(t, x[:-1], f)
         x1 = bezier(t, x[1:], f)
-        xx = numpy.stack([x0, x1])
+        xx = np.stack([x0, x1])
         return f(t, xx)
