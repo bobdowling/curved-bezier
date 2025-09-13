@@ -63,5 +63,35 @@ class TestCross(unittest.TestCase):
         self.assertAlmostEqual(z[1], 0.0)
         self.assertAlmostEqual(z[2], 0.0)
 
+
+class TestProcess(unittest.TestCase):
+    def testValues1(self):
+        x = [1.0, 0.0, 0.0]
+        y = [0.0, 1.0, 0.0]
+        xx, yy, mm, nn, a, b, c, theta = bezier.process(x, y)
+        # xx
+        self.assertAlmostEqual(xx[0], 1.0)
+        self.assertAlmostEqual(xx[1], 0.0)
+        self.assertAlmostEqual(xx[2], 0.0)
+        # yy
+        self.assertAlmostEqual(yy[0], 0.0)
+        self.assertAlmostEqual(yy[1], 1.0)
+        self.assertAlmostEqual(yy[2], 0.0)
+        # mm
+        self.assertAlmostEqual(mm[0], 0.0)
+        self.assertAlmostEqual(mm[1], 0.0)
+        self.assertAlmostEqual(mm[2], 1.0)
+        # nn
+        self.assertAlmostEqual(nn[0], 0.0)
+        self.assertAlmostEqual(nn[1], 1.0)
+        self.assertAlmostEqual(nn[2], 0.0)
+        # coordinates
+        self.assertAlmostEqual(a, 1.0)
+        self.assertAlmostEqual(b, 0.0)
+        self.assertAlmostEqual(c, 1.0)
+        # theta
+        self.assertAlmostEqual(theta, numpy.pi / 2.0)
+
+
 if __name__ == "__main__":
     unittest.main()
