@@ -1,12 +1,13 @@
 from typing import Callable
 
 import numpy as np
+import numpy.typing as npt
 
 
 def line(
-    t: np.ndarray,
-    x: np.ndarray,
-) -> np.ndarray:
+    t: npt.NDArray[np.float64],
+    x: npt.NDArray[np.float64],
+) -> npt.NDArray[np.float64]:
     """Linear interpolation between two points, x[0] at t==0 and x[1] at t==1.
     t:  The interpolation parameter. Expected to hold values between 0.0 and 1.0,
         but this is not actually required and extrapolation is possible.
@@ -24,9 +25,9 @@ def line(
 
 
 def cross(
-    x: np.ndarray,
-    y: np.ndarray,
-) -> np.ndarray:
+    x: npt.NDArray[np.float64],
+    y: npt.NDArray[np.float64],
+) -> npt.NDArray[np.float64]:
     """3D cross product: Takes two 3D vectors and returns their cross-product."""
     if x.shape[0] != 3 or y.shape[0] != 3:
         raise ValueError(
@@ -43,10 +44,12 @@ def cross(
 
 
 def bezier(
-    t: np.ndarray,
-    x: np.ndarray,
-    f: Callable[[np.ndarray, np.ndarray], np.ndarray],
-) -> np.ndarray:
+    t: npt.NDArray[np.float64],
+    x: npt.NDArray[np.float64],
+    f: Callable[
+        [npt.NDArray[np.float64], npt.NDArray[np.float64]], npt.NDArray[np.float64]
+    ],
+) -> npt.NDArray[np.float64]:
     """Recursive definition of bezier curves.
     t:  The interpolation parameter. Expected to hold values between 0.0 and 1.0,
         but this is not actually required and extrapolation is possible.
