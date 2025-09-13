@@ -72,7 +72,7 @@ def process(
     if np.dot(m, m) < EPSILON:
         raise ValueError(f"Vectors too close to [anti-]parallel: {x=}: {y=}")
     mm = m / np.sqrt(np.dot(m, m))
-    nn = cross(xx, mm)
+    nn = cross(mm, xx)
     a = np.dot(x, xx)
     b = np.dot(y, xx)
     c = np.dot(y, nn)
