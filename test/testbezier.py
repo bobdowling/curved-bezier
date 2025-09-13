@@ -2,7 +2,7 @@ from pathlib import Path
 import sys
 import unittest
 
-import numpy
+import numpy as np
 
 f = Path(__file__)
 s = f.parent.parent / "src"
@@ -17,9 +17,9 @@ class TestLinear(unittest.TestCase):
         N = 100
         start = [1.0, 0.0, 0.0]
         stop = [0.0, 1.0, 0.0]
-        t = numpy.linspace(0.0, 1.0, N + 1, endpoint=True, retstep=False)
+        t = np.linspace(0.0, 1.0, N + 1, endpoint=True, retstep=False)
         self.assertEqual(t.shape, (N + 1,))
-        x0 = numpy.array([start, stop])
+        x0 = np.array([start, stop])
         self.assertEqual(x0.shape, (2, 3))
         x = bezier.line(t, x0)
         self.assertEqual(x.shape, (3, N + 1))
@@ -28,9 +28,9 @@ class TestLinear(unittest.TestCase):
         N = 100
         start = [1.0, 0.0, 0.0]
         stop = [0.0, 1.0, 0.0]
-        t = numpy.linspace(0.0, 1.0, N + 1, endpoint=True, retstep=False)
+        t = np.linspace(0.0, 1.0, N + 1, endpoint=True, retstep=False)
         self.assertEqual(t.shape, (N + 1,))
-        x0 = numpy.array([start, stop])
+        x0 = np.array([start, stop])
         x = bezier.line(t, x0)
         for index in range(3):
             self.assertEqual(x[index, 0], start[index])
@@ -41,23 +41,23 @@ class TestLinear(unittest.TestCase):
 
 class TestCross(unittest.TestCase):
     def testShape(self) -> None:
-        x = numpy.array([1.0, 0.0, 0.0])
-        y = numpy.array([0.0, 1.0, 0.0])
-        z = numpy.array([0.0, 0.0, 1.0])
+        x = np.array([1.0, 0.0, 0.0])
+        y = np.array([0.0, 1.0, 0.0])
+        z = np.array([0.0, 0.0, 1.0])
         zz = bezier.cross(x, y)
         self.assertEqual(zz.shape, (3,))
 
     def testXYZ(self) -> None:
-        x = numpy.array([1.0, 0.0, 0.0])
-        y = numpy.array([0.0, 1.0, 0.0])
-        z = numpy.array([0.0, 0.0, 1.0])
+        x = np.array([1.0, 0.0, 0.0])
+        y = np.array([0.0, 1.0, 0.0])
+        z = np.array([0.0, 0.0, 1.0])
         zz = bezier.cross(x, y)
         self.assertAlmostEqual(zz[0], z[0])
         self.assertAlmostEqual(zz[1], z[1])
         self.assertAlmostEqual(zz[2], z[2])
 
     def testParallel(self):
-        x = numpy.array([1.0, 0.0, 0.0])
+        x = np.array([1.0, 0.0, 0.0])
         z = bezier.cross(x, x)
         self.assertAlmostEqual(z[0], 0.0)
         self.assertAlmostEqual(z[1], 0.0)
@@ -90,7 +90,7 @@ class TestProcess(unittest.TestCase):
         self.assertAlmostEqual(b, 0.0)
         self.assertAlmostEqual(c, 1.0)
         # theta
-        self.assertAlmostEqual(theta, numpy.pi / 2.0)
+        self.assertAlmostEqual(theta, np.pi / 2.0)
 
 
 if __name__ == "__main__":
